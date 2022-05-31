@@ -6,7 +6,7 @@ let canvas = document.getElementById('canvas'),
     elapsed,
     then,
     startTime,
-    fps = 24,
+    fps = 30,
     play = true,
     iteration = 0,
     throttled = false,
@@ -34,7 +34,7 @@ let background = isColourBackground
 const controls = new Controls();
 const deltaTime = new DeltaTime();
 const particleFactory = new ParticleFactory(deltaTime, canvas, context);
-const droneManager = new ParticleManager(canvas, context);
+const particleManager = new ParticleManager(canvas, context);
 const player = particleFactory.make(Drone, {x: width / 2, y: height - 100, speed: 1, turningSpeed: 0.1, angle: 0});
 
 if(isBlackAndWhite) {
@@ -53,9 +53,7 @@ window.onclick = function(event) {
 };
 
 window.onkeyup = function(e) {
-    if(e.code === 'Space') {
-        play = !play;
-    }
+
 };
 
 window.onresize = function() {
@@ -83,8 +81,8 @@ function initialise() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     diagonalLength = Math.sqrt(width * width + height * height);
-    droneManager.reset();
-    droneManager.add(player);
+    particleManager.reset();
+    particleManager.add(player);
 }
 
 function startAnimating() {
@@ -111,7 +109,7 @@ function update() {
     if(controls.space) {
         // fire
     }
-    droneManager.update(isDarkMode)
+    particleManager.update(isDarkMode)
 }
 
 function render() {
