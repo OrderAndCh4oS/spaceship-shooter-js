@@ -16,14 +16,14 @@ class ParticleManager {
 
     update(isDarkMode) {
         this._particles = this._particles
-            .map(p => {
+            .filter(p => {
                 p.draw(isDarkMode);
                 p.update();
                 this.collisionDetection(p);
                 if(this.isOffCanvas(p)) p.handleOffCanvas();
-                return p;
-            })
-            .filter(p => !p.remove && !this.isOffCanvas(p));
+
+                return !p.remove
+            });
     }
 
     collisionDetection(particle) {
