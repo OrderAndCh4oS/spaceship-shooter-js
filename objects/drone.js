@@ -7,9 +7,11 @@ class Drone extends Particle {
     colour = '#1d1d23';
     darkColour = '#e6ebec';
 
-    constructor(deltaTime, canvas, context, id, {x, y, speed, turningSpeed, angle}) {
+    constructor(deltaTime, canvas, context, id, {x, y, speed, turningSpeed, angle, black, white}) {
         super(deltaTime, canvas, context, id, {x, y, speed, angle})
         this.turningSpeed = turningSpeed;
+        this.darkColour = white;
+        this.colour = black;
     }
 
     update() {
@@ -36,12 +38,12 @@ class Drone extends Particle {
         this._context.translate(this._position.x, this._position.y);
         this._context.rotate(this._vector.angle);
         this._context.beginPath();
-        this._context.moveTo(10, 0);
-        this._context.lineTo(-10, -7);
-        this._context.lineTo(-10, 7);
-        this._context.lineTo(10, 0);
+        this._context.moveTo(12, 0);
+        this._context.lineTo(-12, -7);
+        this._context.lineTo(-12, 7);
+        this._context.lineTo(12, 0);
         if(this.thrusting) {
-            this._context.moveTo(-10, 0);
+            this._context.moveTo(-12, 0);
             this._context.lineTo(-15, 0);
         }
         this._context.strokeStyle = isDarkMode ? this.darkColour : this.colour;

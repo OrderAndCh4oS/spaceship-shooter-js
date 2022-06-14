@@ -21,30 +21,29 @@ width = canvas.width = window.innerWidth;
 height = canvas.height = window.innerHeight;
 const colourIndex = ~~map(fxrand(), 0, 1, 0, colours.length, 1, Ease.EASE_OUT);
 const colourSet = colours[colourIndex];
-let selectedColours = shuffle(colourSet.colours);
+const selectedColours = shuffle(colourSet.colours);
 const isDarkMode = fxrand() > 0.5;
-const isBlackAndWhite = fxrand() > 0.99;
-const isColourBackground = isBlackAndWhite && fxrand() > 0.85;
-let background = isColourBackground
-    ? selectedColours[0]
-    : isDarkMode
-        ? colourSet.black
-        : colourSet.white;
+let background = isDarkMode
+    ? colourSet.black
+    : colourSet.white;
 
 const controls = new Controls();
 const deltaTime = new DeltaTime();
 const particleFactory = new ParticleFactory(deltaTime, canvas, context);
 const particleManager = new ParticleManager(canvas, context);
-const player = particleFactory.make(Drone, {x: width / 2, y: height - 100, speed: 1, turningSpeed: 0.1, angle: 0});
-
-if(isBlackAndWhite) {
-    selectedColours = [colourSet.white, colourSet.black];
-}
+const player = particleFactory.make(Drone, {
+    x: width / 2,
+    y: height - 100,
+    speed: 1,
+    turningSpeed: 0.1,
+    angle: 0,
+    black: colourSet.black,
+    white: colourSet.white
+});
 
 window.$fxhashFeatures = {
     'Colour': colourSet.name,
-    'Black & White': isBlackAndWhite,
-    'Mode': isColourBackground ? 'Colour' : isDarkMode ? 'Dark' : 'Light',
+    'Mode': isDarkMode ? 'Dark' : 'Light'
 };
 
 window.onclick = function(event) {
@@ -109,7 +108,7 @@ function update() {
     if(controls.space) {
         // fire
     }
-    particleManager.update(isDarkMode)
+    particleManager.update(isDarkMode);
 }
 
 function render() {

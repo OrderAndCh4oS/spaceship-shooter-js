@@ -9,9 +9,9 @@ class Particle {
         this._position = new Vector(x, y);
         this._speed = speed;
         this._velocity = new Vector(0, 0);
-        this._velocity.length = speed;
+        this._velocity.length = 0;
         this._velocity.angle = angle;
-        this._vector = new Vector(0, 1);
+        this._vector = new Vector(1, 0);
         this._vector.angle = angle;
         this._friction = friction;
         this._remove = false;
